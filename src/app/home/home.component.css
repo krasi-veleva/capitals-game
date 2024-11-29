@@ -1,0 +1,39 @@
+.home-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  margin: 10px;
+  padding: 10px;
+}
+
+h1 {
+  font-size: 30px;
+}
+
+div {
+  margin: 20px;
+}
+
+button {
+  display: block;
+  width: 300px;
+  height: 40px;
+  background-color: #7abad9;
+  border: 2px solid #6296b0;
+  border-radius: 10px;
+  font-size: 20px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+button:hover {
+  background-color: #6296b0;
+  transform: scale(1.05);
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 10px 20px;
+  color: #f0f0f0;
+  border-color: #506f8c;
+}
