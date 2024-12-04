@@ -1,0 +1,46 @@
+<header>
+  <h1>Statistic</h1>
+</header>
+<div>
+  <label for="rowsPerPage">Rows per page:</label>
+  <select id="rowsPerPage" (change)="onRowsPerPageChange($event)">
+    <option value="5" selected>5</option>
+    <option value="10">10</option>
+    <option value="15">15</option>
+  </select>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Points</th>
+      <th>Details about the user</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (user of paginatedUsers; track $index) {
+    <tr>
+      <td>{{ user.username }}</td>
+      <td>{{ user.points }}</td>
+      <td><a>Details</a></td>
+    </tr>
+    }
+  </tbody>
+</table>
+<div>
+  <button
+    id="previousBtn"
+    (click)="previousPage()"
+    [disabled]="currentPage === 1"
+  >
+    Previous
+  </button>
+  <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  <button
+    id="nextBtn"
+    (click)="nextPage()"
+    [disabled]="currentPage === totalPages"
+  >
+    Next
+  </button>
+</div>

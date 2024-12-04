@@ -1,0 +1,98 @@
+header {
+  margin: 10px auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #afd3f3;
+}
+
+td a {
+  text-decoration: underline;
+}
+
+div {
+  margin: 10px 0;
+}
+
+select {
+  margin: 10px;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 5px; /* Rounded corners for a modern look */
+  border: 1px solid #8ba8c1; /* Subtle border color */
+  background-color: #f8fbff; /* Light background */
+  color: #333; /* Text color for readability */
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smooth hover effect */
+  appearance: none; /* Hides the default OS styling for dropdowns */
+}
+
+select:hover {
+  background-color: #e4f0ff; /* Slightly darker background on hover */
+  border-color: #6f93b3; /* Subtle border color change on hover */
+}
+
+select:focus {
+  outline: none; /* Removes the default outline */
+  box-shadow: 0 0 5px rgba(111, 147, 179, 0.8); /* Adds a glowing focus effect */
+  border-color: #5b7084; /* Highlight border on focus */
+}
+
+div label {
+  font-size: 16px; /* Adjust label font size for better visibility */
+  font-weight: bold; /* Makes the label more prominent */
+  color: #333; /* Matches text color with the dropdown */
+}
+
+#previousBtn,
+#nextBtn {
+  margin: 10px;
+  width: 10%;
+  height: 40px; /* Slightly larger for better usability */
+  border-radius: 5px; /* Softer corners for a modern look */
+  background-color: #b9e0ff;
+  border: 1px solid #8ba8c1; /* Slightly darker border for contrast */
+  color: #333; /* Text color for readability */
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smooth transitions for interactions */
+}
+
+#previousBtn:hover,
+#nextBtn:hover {
+  background-color: #a7d4f5; /* Slightly darker shade on hover */
+  border-color: #6f93b3; /* Complementing border color on hover */
+  transform: scale(1.05); /* Subtle zoom effect */
+}
+
+#previousBtn:active,
+#nextBtn:active {
+  background-color: #8ba8c1; /* Active state color */
+  border-color: #5b7084;
+  transform: scale(0.95); /* Shrink effect for button press */
+}
+
+button:disabled {
+  background-color: #ccc; /* Disabled button color */
+  color: #999; /* Text color for disabled state */
+  cursor: not-allowed;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
