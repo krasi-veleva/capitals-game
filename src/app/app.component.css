@@ -1,3 +1,23 @@
+.back-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 15px 25px;
+  background-color: #7abad9;
+  color: black;
+  border: 2px solid #6396b0;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #6296b0;
+  border-color: #506f8c;
+}
+
 .container {
   background-color: white;
   min-width: 800px;
