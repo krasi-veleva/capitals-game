@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
+type UserStatistic = {
+  username: string;
+  points: number;
+  id: string;
+};
+
 @Component({
   selector: 'app-statistic',
   standalone: true,
@@ -9,23 +15,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatisticComponent implements OnInit {
   users = [
-    { username: 'Krasi', points: 10, details: 'Details' },
-    { username: 'Alex', points: 20, details: 'Details' },
-    { username: 'John', points: 15, details: 'Details' },
-    { username: 'Maria', points: 25, details: 'Details' },
-    { username: 'Anna', points: 30, details: 'Details' },
-    { username: 'Peter', points: 18, details: 'Details' },
-    { username: 'Krasi', points: 10, details: 'Details' },
-    { username: 'Alex', points: 20, details: 'Details' },
-    { username: 'John', points: 15, details: 'Details' },
-    { username: 'Maria', points: 25, details: 'Details' },
-    { username: 'Anna', points: 30, details: 'Details' },
-    { username: 'Peter', points: 18, details: 'Details' },
+    { username: 'Krasi', points: 10, id: '123412341234' },
+    { username: 'Alex', points: 20, id: '123412341234' },
+    { username: 'John', points: 15, id: '123412341234' },
+    { username: 'Maria', points: 25, id: '123412341234' },
+    { username: 'Anna', points: 30, id: '123412341234' },
+    { username: 'Peter', points: 18, id: '123412341234' },
+    { username: 'Krasi', points: 10, id: '123412341234' },
+    { username: 'Alex', points: 20, id: '123412341234' },
+    { username: 'John', points: 15, id: '123412341234' },
+    { username: 'Maria', points: 25, id: '123412341234' },
+    { username: 'Anna', points: 30, id: '123412341234' },
+    { username: 'Peter', points: 18, id: '123412341234' },
   ];
 
   rowsPerPage = 5;
   currentPage = 1;
-  paginatedUsers: any[] = [];
+  paginatedUsers: UserStatistic[] = [];
   totalPages: number = 1;
 
   ngOnInit(): void {
@@ -40,7 +46,15 @@ export class StatisticComponent implements OnInit {
     );
   }
 
-  onRowsPerPageChange(event: any) {
+  onRowsPerPageChange(event: Event) {
+    if (!event.target) {
+      throw new Error('Event does not have target');
+    }
+
+    if (!(event.target instanceof HTMLSelectElement)) {
+      throw new Error('Event is not fired from the select box');
+    }
+
     this.rowsPerPage = +event.target.value;
     this.currentPage = 1; // Reset to the first page
     this.calculatePagination();
