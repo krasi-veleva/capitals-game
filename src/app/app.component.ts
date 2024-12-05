@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { Location } from '@angular/common';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +11,11 @@ import { Location } from '@angular/common';
 export class AppComponent {
   title = 'capitals-game';
 
-  constructor(private location: Location) {}
+  isHomePath(): boolean {
+    return window.location.pathname === '/';
+  }
 
   goBack(): void {
-    this.location.back();
+    window.history.back();
   }
 }

@@ -1,4 +1,6 @@
-<button class="back-btn" (click)="goBack()">Back</button>
+<button [hidden]="isHomePath()" class="back-btn" (click)="goBack()">
+  Back
+</button>
 <div class="container">
   <router-outlet />
 </div>
