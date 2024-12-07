@@ -15,18 +15,18 @@ type UserStatistic = {
 })
 export class StatisticComponent implements OnInit {
   users = [
-    { username: 'Krasi', points: 10, id: '123412341234' },
-    { username: 'Alex', points: 20, id: '123412341234' },
-    { username: 'John', points: 15, id: '123412341234' },
-    { username: 'Maria', points: 25, id: '123412341234' },
-    { username: 'Anna', points: 30, id: '123412341234' },
-    { username: 'Peter', points: 18, id: '123412341234' },
-    { username: 'Krasi', points: 10, id: '123412341234' },
-    { username: 'Alex', points: 20, id: '123412341234' },
-    { username: 'John', points: 15, id: '123412341234' },
-    { username: 'Maria', points: 25, id: '123412341234' },
-    { username: 'Anna', points: 30, id: '123412341234' },
-    { username: 'Peter', points: 18, id: '123412341234' },
+    { username: 'Sofia', points: 10, id: '1' },
+    { username: 'Alex', points: 20, id: '2' },
+    { username: 'John', points: 15, id: '3' },
+    { username: 'Maria', points: 25, id: '4' },
+    { username: 'Anna', points: 30, id: '5' },
+    { username: 'Peter', points: 18, id: '6' },
+    { username: 'Sofia', points: 10, id: '7' },
+    { username: 'Alex', points: 20, id: '8' },
+    { username: 'John', points: 15, id: '9' },
+    { username: 'Maria', points: 25, id: '10' },
+    { username: 'Anna', points: 30, id: '11' },
+    { username: 'Peter', points: 18, id: '12' },
   ];
 
   rowsPerPage = 5;
@@ -56,7 +56,7 @@ export class StatisticComponent implements OnInit {
     }
 
     this.rowsPerPage = +event.target.value;
-    this.currentPage = 1; // Reset to the first page
+    this.currentPage = 1;
     this.calculatePagination();
   }
 

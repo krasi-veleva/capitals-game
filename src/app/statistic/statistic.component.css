@@ -24,6 +24,7 @@ tr:nth-child(even) {
 
 td a {
   text-decoration: underline;
+  font-weight: bolder;
 }
 
 div {
@@ -34,64 +35,64 @@ select {
   margin: 10px;
   padding: 5px 10px;
   font-size: 14px;
-  border-radius: 5px; /* Rounded corners for a modern look */
-  border: 1px solid #8ba8c1; /* Subtle border color */
-  background-color: #f8fbff; /* Light background */
-  color: #333; /* Text color for readability */
+  border-radius: 5px;
+  border: 1px solid #8ba8c1;
+  background-color: #f8fbff;
+  color: #333;
   cursor: pointer;
-  transition: all 0.3s ease; /* Smooth hover effect */
-  appearance: none; /* Hides the default OS styling for dropdowns */
+  transition: all 0.3s ease;
+  appearance: none;
 }
 
 select:hover {
-  background-color: #e4f0ff; /* Slightly darker background on hover */
-  border-color: #6f93b3; /* Subtle border color change on hover */
+  background-color: #e4f0ff;
+  border-color: #6f93b3;
 }
 
 select:focus {
-  outline: none; /* Removes the default outline */
-  box-shadow: 0 0 5px rgba(111, 147, 179, 0.8); /* Adds a glowing focus effect */
-  border-color: #5b7084; /* Highlight border on focus */
+  outline: none;
+  box-shadow: 0 0 5px rgba(111, 147, 179, 0.8);
+  border-color: #5b7084;
 }
 
 div label {
-  font-size: 16px; /* Adjust label font size for better visibility */
-  font-weight: bold; /* Makes the label more prominent */
-  color: #333; /* Matches text color with the dropdown */
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
 }
 
 #previousBtn,
 #nextBtn {
   margin: 10px;
   width: 10%;
-  height: 40px; /* Slightly larger for better usability */
-  border-radius: 5px; /* Softer corners for a modern look */
+  height: 40px;
+  border-radius: 5px;
   background-color: #b9e0ff;
-  border: 1px solid #8ba8c1; /* Slightly darker border for contrast */
-  color: #333; /* Text color for readability */
+  border: 1px solid #8ba8c1;
+  color: #333;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s ease; /* Smooth transitions for interactions */
+  transition: all 0.3s ease;
 }
 
 #previousBtn:hover,
 #nextBtn:hover {
-  background-color: #a7d4f5; /* Slightly darker shade on hover */
-  border-color: #6f93b3; /* Complementing border color on hover */
-  transform: scale(1.05); /* Subtle zoom effect */
+  background-color: #a7d4f5;
+  border-color: #6f93b3;
+  transform: scale(1.05);
 }
 
 #previousBtn:active,
 #nextBtn:active {
-  background-color: #8ba8c1; /* Active state color */
+  background-color: #8ba8c1;
   border-color: #5b7084;
-  transform: scale(0.95); /* Shrink effect for button press */
+  transform: scale(0.95);
 }
 
 button:disabled {
-  background-color: #ccc; /* Disabled button color */
-  color: #999; /* Text color for disabled state */
+  background-color: #ccc;
+  color: #999;
   cursor: not-allowed;
   border: 1px solid #aaa;
   border-radius: 5px;
