@@ -4,13 +4,14 @@
   </header>
 
   <div class="play-button">
-    <button>Play</button>
+    <button [disabled]="isLoggedIn">Play</button>
   </div>
 
   <div class="statistic-button">
     <button (click)="goToStatistic()">Statistic</button>
   </div>
 
+  @if (isLoggedIn) {
   <div class="login-button">
     <button (click)="goToLogin()">Login</button>
   </div>
@@ -19,7 +20,9 @@
     <button (click)="goToRegister()">Register</button>
   </div>
 
+  }@else {
   <div class="logout-button">
     <button>Logout</button>
   </div>
+  }
 </section>

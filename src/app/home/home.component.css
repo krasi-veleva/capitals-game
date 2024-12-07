@@ -37,3 +37,19 @@ button:hover {
   color: #f0f0f0;
   border-color: #506f8c;
 }
+
+button:disabled {
+  background-color: #d3d3d3;
+  border-color: #a0a0a0;
+  color: #7a7a7a;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+button:disabled:hover {
+  background-color: #d3d3d3;
+  transform: none;
+  box-shadow: none;
+  color: #7a7a7a;
+}
