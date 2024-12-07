@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 type UserStatistic = {
   username: string;
@@ -9,7 +10,7 @@ type UserStatistic = {
 @Component({
   selector: 'app-statistic',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './statistic.component.html',
   styleUrl: './statistic.component.css',
 })

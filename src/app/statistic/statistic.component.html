@@ -22,7 +22,7 @@
     <tr>
       <td>{{ user.username }}</td>
       <td>{{ user.points }}</td>
-      <td><a>Details</a></td>
+      <td><a [routerLink]="['details', user.id]">Details</a></td>
     </tr>
     }
   </tbody>
