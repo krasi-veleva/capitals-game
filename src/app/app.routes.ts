@@ -6,6 +6,7 @@ import { StatisticComponent } from './statistic/statistic.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { CapitalsGameComponent } from './capitals-game/capitals-game.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,5 +20,6 @@ export const routes: Routes = [
     ],
   },
   { path: 'edit-user/:id', component: EditUserComponent },
+  { path: 'capitals-game', component: CapitalsGameComponent },
   { path: '**', component: PageNotFoundComponent },
 ];

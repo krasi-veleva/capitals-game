@@ -13,6 +13,10 @@ export class HomeComponent {
 
   constructor(private router: Router) {}
 
+  goToCapitalsGame() {
+    this.router.navigate(['/capitals-game']);
+  }
+
   goToRegister() {
     this.router.navigate(['/register']);
   }
