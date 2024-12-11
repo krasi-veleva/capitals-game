@@ -31,7 +31,7 @@
   text-shadow: 0 0 5px white;
 }
 
-.buttons {
+.buttons-container {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -41,7 +41,7 @@
   margin-bottom: 30px;
 }
 
-.buttons button {
+.buttons-container button {
   flex: 1 1 calc(50% - 15px);
   padding: 15px;
   min-width: 100px;
@@ -59,7 +59,7 @@
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.buttons button:hover {
+.buttons-container button:hover {
   transform: translateY(-2px);
   box-shadow: 0 0 8px black;
 }
