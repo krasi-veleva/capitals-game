@@ -1,4 +1,8 @@
-<button [hidden]="isHomePath()" class="back-btn" (click)="goBack()">
+<button
+  [hidden]="isHomePath() || isGamePath()"
+  class="back-btn"
+  (click)="goBack()"
+>
   Back
 </button>
 <div class="container">
