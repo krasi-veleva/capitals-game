@@ -4,25 +4,31 @@
   </header>
 
   <div class="play-button">
-    <button (click)="goToCapitalsGame()" [disabled]="!isLoggedIn">Play</button>
+    <!-- <button [disabled]="isLoggedIn">Play</button> -->
+
+    <button (click)="goToCapitals()" [disabled]="!(user$ | async)">Play</button>
   </div>
 
   <div class="statistic-button">
     <button (click)="goToStatistic()">Statistic</button>
   </div>
+  <!-- @if (isLoggedIn) { -->
 
-  @if (!isLoggedIn) {
-  <div class="login-button">
-    <button (click)="goToLogin()">Login</button>
-  </div>
+  <div *ngIf="!(user$ | async)">
+    <div class="login-button">
+      <button (click)="goToLogin()">Login</button>
+    </div>
 
-  <div class="register-button">
-    <button (click)="goToRegister()">Register</button>
+    <div class="register-button">
+      <button (click)="goToRegister()">Register</button>
+    </div>
   </div>
+  <!-- }@else { -->
 
-  }@else {
-  <div class="logout-button">
-    <button>Logout</button>
+  <div *ngIf="user$ | async">
+    <div class="logout-button">
+      <button (click)="logout()">Logout</button>
+    </div>
   </div>
-  }
+  <!-- } -->
 </section>

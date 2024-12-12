@@ -1,19 +1,25 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { Observable } from 'rxjs';
+import { User } from 'firebase/auth';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  isLoggedIn: boolean = true;
+  user$: Observable<User | null>;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {
+    this.user$ = this.authService.user$;
+  }
 
-  goToCapitalsGame() {
+  goToCapitals() {
     this.router.navigate(['/capitals-game']);
   }
 
@@ -27,5 +33,9 @@ export class HomeComponent {
 
   goToStatistic() {
     this.router.navigate(['/statistic']);
+  }
+
+  logout() {
+    this.authService.signOut();
   }
 }

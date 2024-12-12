@@ -1,20 +1,38 @@
-<form>
+<form (submit)="register()">
   <h1>Register</h1>
   <div class="form-group">
     <label for="email"> Email </label>
-    <input id="email" type="email" name="email" />
+    <input id="email" type="email" name="email" [(ngModel)]="email" required />
   </div>
   <div class="form-group">
     <label for="username"> Username </label>
-    <input id="username" type="text" name="username" />
+    <input
+      id="username"
+      type="text"
+      name="username"
+      [(ngModel)]="username"
+      required
+    />
   </div>
   <div class="form-group">
     <label for="password"> Password </label>
-    <input id="password" type="password" name="password" />
+    <input
+      id="password"
+      type="password"
+      name="password"
+      [(ngModel)]="password"
+      required
+    />
   </div>
   <div class="form-group">
     <label for="repass"> Repeat Password </label>
-    <input id="repass" type="repass" name="repass" />
+    <input
+      id="repass"
+      type="password"
+      name="repass"
+      [(ngModel)]="repass"
+      required
+    />
   </div>
   <button type="submit" class="btn-submit">Submit</button>
   <div class="nav-to-login">
