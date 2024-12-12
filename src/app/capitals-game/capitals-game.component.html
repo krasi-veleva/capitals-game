@@ -1,4 +1,12 @@
 <div class="game-container">
+  @if(gameState === "game-over"){
+  <app-game-over></app-game-over>
+
+  } @else if(gameState === "winner") {
+  <app-winner></app-winner>
+
+  }@else {
+
   <header>
     <h1>Guess the capital</h1>
   </header>
@@ -6,7 +14,8 @@
     <p>Italy</p>
   </div>
   <div class="buttons-container">
-    <button>Rome</button>
+    <button (click)="winner()">Rome</button>
+
     <button>Budapest</button>
     <button>Moscow</button>
     <button>Madrid</button>
@@ -15,4 +24,5 @@
   <div class="score">
     <p>Score: 1</p>
   </div>
+  }
 </div>
