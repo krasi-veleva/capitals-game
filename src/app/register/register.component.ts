@@ -26,7 +26,7 @@ export class RegisterComponent {
     }
 
     this.authService
-      .signUp(this.email, this.password)
+      .signUp(this.email, this.password, this.username)
       .then((userCredential: UserCredential) => {
         // Registration successful
         console.log('User registered:', userCredential.user);
