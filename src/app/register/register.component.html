@@ -12,7 +12,9 @@
       required
     />
   </div>
-  <div class="error" *ngIf="isEmailInvalid(registerForm)">
+  @if(isEmailInvalid(registerForm)) {
+
+  <div class="error">
     <span
       class="error-message"
       *ngIf="registerForm.controls['email']?.errors?.['required']"
@@ -24,6 +26,7 @@
       >Invalid email</span
     >
   </div>
+  }
   <div class="form-group">
     <label for="username"> Username </label>
     <input
@@ -101,6 +104,8 @@
       >Repeat password must be at least 6 characters</span
     >
   </div>
+  } @if(errorMessage){
+  {{ errorMessage }}
   }
   <button type="submit" class="btn-submit">Submit</button>
   <div class="nav-to-login">
