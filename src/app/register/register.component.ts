@@ -17,6 +17,7 @@ export class RegisterComponent {
   username: string = '';
   password: string = '';
   repass: string = '';
+  errorMessage: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -26,6 +27,42 @@ export class RegisterComponent {
       usernameControl?.invalid &&
       (usernameControl?.touched || usernameControl?.dirty)
     );
+  }
+
+  isEmailInvalid(form: NgForm): boolean {
+    const emailControl = form.controls['email'];
+
+    const regex =
+      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    return !!(
+      emailControl?.invalid &&
+      (emailControl?.touched || emailControl?.dirty)
+    );
+  }
+
+  isPasswordInvalid(form: NgForm): boolean {
+    const passwordControl = form.controls['password'];
+    return !!(
+      passwordControl?.invalid &&
+      (passwordControl?.touched || passwordControl?.dirty)
+    );
+  }
+
+  isRepassInvalid(form: NgForm): boolean {
+    const repassControl = form.controls['repass'];
+    return !!(
+      repassControl?.invalid &&
+      (repassControl?.touched || repassControl?.dirty)
+    );
+  }
+
+  passwordMismatch(form: NgForm): boolean {
+    if (this.password == this.repass) {
+      return false;
+    }
+
+    return true;
   }
 
   register(form: NgForm) {
@@ -46,6 +83,7 @@ export class RegisterComponent {
         this.router.navigate(['/login']);
       })
       .catch((error) => {
+        this.errorMessage = error.message;
         console.error('Error during registration:', error);
       });
   }

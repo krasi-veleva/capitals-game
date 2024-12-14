@@ -2,7 +2,27 @@
   <h1>Register</h1>
   <div class="form-group">
     <label for="email"> Email </label>
-    <input id="email" type="email" name="email" [(ngModel)]="email" required />
+    <input
+      id="email"
+      type="email"
+      name="email"
+      [(ngModel)]="email"
+      [ngClass]="{ 'error-border': isEmailInvalid(registerForm) }"
+      pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+      required
+    />
+  </div>
+  <div class="error" *ngIf="isEmailInvalid(registerForm)">
+    <span
+      class="error-message"
+      *ngIf="registerForm.controls['email']?.errors?.['required']"
+      >Email is required</span
+    >
+    <span
+      class="error-message"
+      *ngIf="registerForm.controls['email']?.errors?.['pattern']"
+      >Invalid email</span
+    >
   </div>
   <div class="form-group">
     <label for="username"> Username </label>
@@ -37,9 +57,25 @@
       type="password"
       name="password"
       [(ngModel)]="password"
+      [ngClass]="{ 'error-border': isPasswordInvalid(registerForm) }"
       required
+      minlength="6"
     />
   </div>
+  @if(isPasswordInvalid(registerForm)){
+  <div class="error">
+    <span
+      class="error-message"
+      *ngIf="registerForm.controls['password']?.errors?.['required']"
+      >Password is required</span
+    >
+    <span
+      class="error-message"
+      *ngIf="registerForm.controls['password']?.errors?.['minlength']"
+      >Password must be at least 6 characters</span
+    >
+  </div>
+  }
   <div class="form-group">
     <label for="repass"> Repeat Password </label>
     <input
@@ -47,9 +83,25 @@
       type="password"
       name="repass"
       [(ngModel)]="repass"
+      [ngClass]="{ 'error-border': isRepassInvalid(registerForm) }"
       required
+      minlength="6"
     />
   </div>
+  @if(isRepassInvalid(registerForm)){
+  <div class="error">
+    <span
+      class="error-message"
+      *ngIf="registerForm.controls['repass']?.errors?.['required']"
+      >Repeat Password is required</span
+    >
+    <span
+      class="error-message"
+      *ngIf="registerForm.controls['repass']?.errors?.['minlength']"
+      >Repeat password must be at least 6 characters</span
+    >
+  </div>
+  }
   <button type="submit" class="btn-submit">Submit</button>
   <div class="nav-to-login">
     <p>
