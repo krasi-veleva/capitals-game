@@ -6,14 +6,29 @@
   </div>
   <div class="form-group">
     <label for="username"> Username </label>
+
     <input
       id="username"
       type="text"
       name="username"
       [(ngModel)]="username"
+      #usernameCtrl="ngModel"
+      [ngClass]="{ 'error-border': isUsernameInvalid() }"
       required
+      minlength="3"
     />
   </div>
+  @if(isUsernameInvalid()){
+  <div class="error">
+    <span class="error-message" *ngIf="usernameCtrl.errors?.['required']"
+      >Username is required</span
+    >
+    <span class="error-message" *ngIf="usernameCtrl.errors?.['minlength']"
+      >Username must be at least 3 characters</span
+    >
+  </div>
+
+  }
   <div class="form-group">
     <label for="password"> Password </label>
     <input
