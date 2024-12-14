@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { FormsModule, NgModel } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { UserCredential } from 'firebase/auth';
@@ -18,19 +18,21 @@ export class RegisterComponent {
   password: string = '';
   repass: string = '';
 
-  @ViewChild('usernameCtrl') usernameCtrl!: NgModel;
-
   constructor(private authService: AuthService, private router: Router) {}
 
-  isUsernameInvalid(): boolean {
-    return (
-      (this.usernameCtrl?.invalid &&
-        (this.usernameCtrl?.touched || this.usernameCtrl?.dirty)) ||
-      false
+  isUsernameInvalid(form: NgForm): boolean {
+    const usernameControl = form.controls['username'];
+    return !!(
+      usernameControl?.invalid &&
+      (usernameControl?.touched || usernameControl?.dirty)
     );
   }
 
-  register() {
+  register(form: NgForm) {
+    if (!form.valid) {
+      return;
+    }
+
     if (this.password !== this.repass) {
       alert('Passwords do not match');
       return;
