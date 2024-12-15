@@ -1,9 +1,32 @@
-<form (submit)="login()">
+<form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
   <h1>Login</h1>
   <div class="form-group">
     <label for="email"> Email </label>
-    <input id="email" type="email" name="email" [(ngModel)]="email" required />
+    <input
+      id="email"
+      type="email"
+      name="email"
+      [(ngModel)]="email"
+      [ngClass]="{ 'error-border': isEmailInvalid(loginForm) }"
+      pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+      required
+    />
   </div>
+  @if(isEmailInvalid(loginForm)) {
+
+  <div class="error">
+    <span
+      class="error-message"
+      *ngIf="loginForm.controls['email']?.errors?.['required']"
+      >Email is required</span
+    >
+    <span
+      class="error-message"
+      *ngIf="loginForm.controls['email']?.errors?.['pattern']"
+      >Invalid email</span
+    >
+  </div>
+  }
   <div class="form-group">
     <label for="password"> Password </label>
     <input
@@ -11,9 +34,27 @@
       type="password"
       name="password"
       [(ngModel)]="password"
+      [ngClass]="{ 'error-border': isPasswordInvalid(loginForm) }"
       required
+      minlength="6"
     />
   </div>
+  @if(isPasswordInvalid(loginForm)){
+  <div class="error">
+    <span
+      class="error-message"
+      *ngIf="loginForm.controls['password']?.errors?.['required']"
+      >Password is required</span
+    >
+    <span
+      class="error-message"
+      *ngIf="loginForm.controls['password']?.errors?.['minlength']"
+      >Password must be at least 6 characters</span
+    >
+  </div>
+  } @if(errorMessage){
+  {{ errorMessage }}
+  }
   <button type="submit" class="btn-submit">Submit</button>
   <div class="nav-to-login">
     <p>

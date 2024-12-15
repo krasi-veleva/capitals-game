@@ -27,6 +27,22 @@ form h1 {
   color: #555;
 }
 
+.error {
+  color: red;
+  font-weight: bold;
+  margin-top: 3px;
+  margin-bottom: 5px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.error-border {
+  border: 2px solid red !important;
+}
+
 .form-group input {
   padding: 10px;
   font-size: 1em;
