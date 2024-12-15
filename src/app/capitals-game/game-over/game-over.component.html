@@ -4,11 +4,11 @@
   </header>
 
   <div class="score">
-    <p>Score:</p>
+    <p>Score: {{ score }}</p>
   </div>
 
   <div class="buttons-wrapper">
-    <button class="play-again">Play Again</button>
+    <button class="play-again" (click)="playAgain.emit()">Play Again</button>
     <button class="home-page" routerLink="/">Go to Home</button>
   </div>
 </div>

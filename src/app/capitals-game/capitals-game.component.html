@@ -1,28 +1,28 @@
 <div class="game-container">
-  @if(gameState === "game-over"){
-  <app-game-over></app-game-over>
-
-  } @else if(gameState === "winner") {
-  <app-winner></app-winner>
-
-  }@else {
-
+  @if (gameState === "game-over") {
+  <app-game-over [score]="score" (playAgain)="resetGame()"></app-game-over>
+  } @else if (gameState === "winner") {
+  <app-winner [score]="score" (playAgain)="resetGame()"></app-winner>
+  } @else {
   <header>
     <h1>Guess the capital</h1>
   </header>
-  <div class="country">
-    <p>Italy</p>
-  </div>
-  <div class="buttons-container">
-    <button (click)="winner()">Rome</button>
 
-    <button>Budapest</button>
-    <button>Moscow</button>
-    <button>Madrid</button>
+  @if (currentQuestion) {
+  <div class="country">
+    <p>{{ currentQuestion.country }}</p>
+  </div>
+
+  <div class="buttons-container">
+    @for (option of currentQuestion.options; track option) {
+    <button (click)="handleAnswer(option)">
+      {{ option }}
+    </button>
+    }
   </div>
 
   <div class="score">
-    <p>Score: 1</p>
+    <p>Score: {{ score }}</p>
   </div>
-  }
+  } }
 </div>

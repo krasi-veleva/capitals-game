@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -8,4 +8,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './game-over.component.html',
   styleUrl: './game-over.component.css',
 })
-export class GameOverComponent {}
+export class GameOverComponent {
+  @Input() score: number = 0;
+  @Output() playAgain = new EventEmitter<void>();
+}
