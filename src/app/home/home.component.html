@@ -1,34 +1,32 @@
 <section class="home-section">
   <header>
-    <h1>Dearest Adventurous Player, Welcome to Guess The Country!</h1>
+    <h1>Dearest Adventurous Player, Welcome to Guess The Capital!</h1>
   </header>
 
   <div class="play-button">
-    <!-- <button [disabled]="isLoggedIn">Play</button> -->
-
-    <button (click)="goToCapitals()" [disabled]="!(user$ | async)">Play</button>
+    <button (click)="handlePlayClick()" [disabled]="!(user$ | async)">
+      Play
+    </button>
   </div>
 
   <div class="statistic-button">
     <button (click)="goToStatistic()">Statistic</button>
   </div>
-  <!-- @if (isLoggedIn) { -->
 
-  <div *ngIf="!(user$ | async)">
+  @if (!(user$ | async)) {
+  <div>
     <div class="login-button">
       <button (click)="goToLogin()">Login</button>
     </div>
-
     <div class="register-button">
       <button (click)="goToRegister()">Register</button>
     </div>
   </div>
-  <!-- }@else { -->
-
-  <div *ngIf="user$ | async">
+  } @else {
+  <div>
     <div class="logout-button">
       <button (click)="logout()">Logout</button>
     </div>
   </div>
-  <!-- } -->
+  }
 </section>

@@ -35,7 +35,22 @@ export class HomeComponent {
     this.router.navigate(['/statistic']);
   }
 
-  logout() {
-    this.authService.signOut();
+  async logout() {
+    try {
+      await this.authService.signOut();
+      this.router.navigate(['/']);
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  }
+
+  handlePlayClick() {
+    this.user$.subscribe((user) => {
+      if (user) {
+        this.goToCapitals();
+      } else {
+        this.goToLogin();
+      }
+    });
   }
 }
