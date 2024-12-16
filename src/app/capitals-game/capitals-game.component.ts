@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GameOverComponent } from './game-over/game-over.component';
 import { WinnerComponent } from './winner/winner.component';
 import { Question } from '../models/question.models';
+import { GameService } from '../services/game.service';
 
 @Component({
   selector: 'app-capitals-game',
@@ -11,32 +12,27 @@ import { Question } from '../models/question.models';
   styleUrl: './capitals-game.component.css',
 })
 export class CapitalsGameComponent implements OnInit {
-  questions: Question[] = [
-    {
-      country: 'Italy',
-      correctAnswer: 'Rome',
-      options: ['Rome', 'Budapest', 'Moscow', 'Madrid'],
-    },
-    {
-      country: 'France',
-      correctAnswer: 'Paris',
-      options: ['Paris', 'Berlin', 'London', 'Lisbon'],
-    },
-    {
-      country: 'Germany',
-      correctAnswer: 'Berlin',
-      options: ['Berlin', 'Vienna', 'Warsaw', 'Prague'],
-    },
-  ];
+  questions: Question[] = [];
 
   currentQuestionIndex: number = 0;
   score: number = 0;
-  gameState: 'playing' | 'game-over' | 'winner' = 'playing';
+  gameState: 'loading' | 'playing' | 'game-over' | 'winner' = 'loading';
   currentQuestion: Question | null = null;
-  ngOnInit() {
-    this.shuffleQuestions();
-    this.currentQuestion = this.questions[0];
+
+  constructor(private gameService: GameService) {}
+
+  async ngOnInit() {
+    try {
+      this.questions = await this.gameService.getQuestions();
+      this.shuffleQuestions();
+      this.currentQuestion = this.questions[0];
+      this.gameState = 'playing';
+    } catch (error) {
+      console.error('Error loading questions:', error);
+      // Handle error appropriately
+    }
   }
+
   private shuffleQuestions() {
     for (let i = this.questions.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -46,6 +42,7 @@ export class CapitalsGameComponent implements OnInit {
       ];
     }
   }
+
   handleAnswer(selectedAnswer: string) {
     if (selectedAnswer === this.currentQuestion?.correctAnswer) {
       this.score++;
