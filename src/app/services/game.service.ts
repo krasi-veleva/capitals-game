@@ -1,12 +1,22 @@
 import { Injectable } from '@angular/core';
-import { collection, Firestore, getDocs } from '@angular/fire/firestore';
+import {
+  collection,
+  doc,
+  Firestore,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from '@angular/fire/firestore';
 import { Question } from '../models/question.models';
+import { AuthService } from './auth.service';
+import { firstValueFrom } from 'rxjs';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore, private authService: AuthService) {}
 
   async getQuestions(): Promise<Question[]> {
     const questionsCollection = collection(this.firestore, 'capitalQuestions');
@@ -18,11 +28,12 @@ export class GameService {
       return {
         country: data['country'],
         correctAnswer: data['correctAnswer'],
-        options: this.shuffleArray([...data['options']]), // Shuffle options for each question
+        options: this.shuffleArray([...data['options']]),
       };
     });
-    return this.shuffleArray(questions); // Shuffle the questions order
+    return this.shuffleArray(questions);
   }
+
   private shuffleArray<T>(array: T[]): T[] {
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -31,7 +42,30 @@ export class GameService {
     }
     return shuffled;
   }
+
   getShuffledQuestions(questions: Question[]): Question[] {
     return this.shuffleArray(questions);
+  }
+
+  async updateUserScore(score: number): Promise<void> {
+    try {
+      const user = await firstValueFrom(this.authService.user$);
+      if (!user) {
+        console.log('No user logged in');
+        return;
+      }
+      const userRef = doc(this.firestore, 'users', user.uid);
+      const userDoc = await getDoc(userRef);
+      const userData = userDoc.data() as User;
+
+      if (score > (userData.bestScore || 0)) {
+        await updateDoc(userRef, {
+          bestScore: score,
+        });
+        console.log('Score updated successfully');
+      }
+    } catch (error) {
+      console.error('Error updating score:', error);
+    }
   }
 }

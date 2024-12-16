@@ -13,7 +13,6 @@ import { GameService } from '../services/game.service';
 })
 export class CapitalsGameComponent implements OnInit {
   questions: Question[] = [];
-
   currentQuestionIndex: number = 0;
   score: number = 0;
   gameState: 'loading' | 'playing' | 'game-over' | 'winner' = 'loading';
@@ -26,6 +25,7 @@ export class CapitalsGameComponent implements OnInit {
   async ngOnInit() {
     await this.loadQuestions();
   }
+
   private async loadQuestions() {
     try {
       this.questions = await this.gameService.getQuestions();
@@ -47,6 +47,7 @@ export class CapitalsGameComponent implements OnInit {
 
   handleAnswer(selectedAnswer: string) {
     if (this.isAnswerSelected || !this.currentQuestion) return;
+
     this.isAnswerSelected = true;
     this.selectedAnswer = selectedAnswer;
 
@@ -58,8 +59,16 @@ export class CapitalsGameComponent implements OnInit {
       }
     }, 1000);
   }
-  private handleCorrectAnswer() {
+
+  private async handleCorrectAnswer() {
     this.score++;
+
+    try {
+      await this.gameService.updateUserScore(this.score);
+    } catch (error) {
+      console.error('Error updating score:', error);
+    }
+
     if (this.currentQuestionIndex < this.questions.length - 1) {
       this.moveToNextQuestion();
     } else {
@@ -67,16 +76,23 @@ export class CapitalsGameComponent implements OnInit {
     }
   }
 
-  private handleWrongAnswer() {
+  private async handleWrongAnswer() {
     this.gameState = 'game-over';
+    try {
+      await this.gameService.updateUserScore(this.score);
+    } catch (error) {
+      console.error('Error updating score:', error);
+    }
   }
+
   private moveToNextQuestion() {
     this.currentQuestionIndex++;
     this.currentQuestion = this.questions[this.currentQuestionIndex];
     this.isAnswerSelected = false;
     this.selectedAnswer = null;
   }
-  resetGame() {
+
+  async resetGame() {
     this.startNewGame();
   }
 }
