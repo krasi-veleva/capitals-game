@@ -18,50 +18,65 @@ export class CapitalsGameComponent implements OnInit {
   score: number = 0;
   gameState: 'loading' | 'playing' | 'game-over' | 'winner' = 'loading';
   currentQuestion: Question | null = null;
+  isAnswerSelected: boolean = false;
+  selectedAnswer: string | null = null;
 
   constructor(private gameService: GameService) {}
 
   async ngOnInit() {
+    await this.loadQuestions();
+  }
+  private async loadQuestions() {
     try {
       this.questions = await this.gameService.getQuestions();
-      this.shuffleQuestions();
-      this.currentQuestion = this.questions[0];
-      this.gameState = 'playing';
+      this.startNewGame();
     } catch (error) {
       console.error('Error loading questions:', error);
-      // Handle error appropriately
     }
   }
 
-  private shuffleQuestions() {
-    for (let i = this.questions.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [this.questions[i], this.questions[j]] = [
-        this.questions[j],
-        this.questions[i],
-      ];
-    }
-  }
-
-  handleAnswer(selectedAnswer: string) {
-    if (selectedAnswer === this.currentQuestion?.correctAnswer) {
-      this.score++;
-      if (this.currentQuestionIndex < this.questions.length - 1) {
-        this.currentQuestionIndex++;
-        this.currentQuestion = this.questions[this.currentQuestionIndex];
-      } else {
-        this.gameState = 'winner';
-      }
-    } else {
-      this.gameState = 'game-over';
-    }
-  }
-
-  resetGame() {
-    this.shuffleQuestions();
+  startNewGame() {
+    this.questions = this.gameService.getShuffledQuestions(this.questions);
     this.currentQuestionIndex = 0;
     this.score = 0;
     this.currentQuestion = this.questions[0];
     this.gameState = 'playing';
+    this.isAnswerSelected = false;
+    this.selectedAnswer = null;
+  }
+
+  handleAnswer(selectedAnswer: string) {
+    if (this.isAnswerSelected || !this.currentQuestion) return;
+    this.isAnswerSelected = true;
+    this.selectedAnswer = selectedAnswer;
+
+    setTimeout(() => {
+      if (selectedAnswer === this.currentQuestion?.correctAnswer) {
+        this.handleCorrectAnswer();
+      } else {
+        this.handleWrongAnswer();
+      }
+    }, 1000);
+  }
+  private handleCorrectAnswer() {
+    this.score++;
+    if (this.currentQuestionIndex < this.questions.length - 1) {
+      this.moveToNextQuestion();
+    } else {
+      this.gameState = 'winner';
+    }
+  }
+
+  private handleWrongAnswer() {
+    this.gameState = 'game-over';
+  }
+  private moveToNextQuestion() {
+    this.currentQuestionIndex++;
+    this.currentQuestion = this.questions[this.currentQuestionIndex];
+    this.isAnswerSelected = false;
+    this.selectedAnswer = null;
+  }
+  resetGame() {
+    this.startNewGame();
   }
 }

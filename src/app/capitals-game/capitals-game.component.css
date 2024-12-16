@@ -72,3 +72,29 @@
   letter-spacing: 1px;
   opacity: 0.9;
 }
+
+.buttons-container button.correct {
+  background-color: #4caf50 !important;
+  color: white !important;
+  border-color: #45a049 !important;
+}
+
+.buttons-container button.incorrect {
+  background-color: #f44336 !important;
+  color: white !important;
+  border-color: #da190b !important;
+}
+
+.buttons-container button:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 1.2rem;
+  color: #333;
+}

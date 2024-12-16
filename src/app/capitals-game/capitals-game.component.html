@@ -1,5 +1,9 @@
 <div class="game-container">
-  @if (gameState === "game-over") {
+  @if (gameState === "loading") {
+  <div class="loading">
+    <p>Loading questions...</p>
+  </div>
+  } @else if (gameState === "game-over") {
   <app-game-over [score]="score" (playAgain)="resetGame()"></app-game-over>
   } @else if (gameState === "winner") {
   <app-winner [score]="score" (playAgain)="resetGame()"></app-winner>
@@ -15,7 +19,18 @@
 
   <div class="buttons-container">
     @for (option of currentQuestion.options; track option) {
-    <button (click)="handleAnswer(option)">
+    <button
+      (click)="handleAnswer(option)"
+      [disabled]="isAnswerSelected"
+      [class.correct]="
+        isAnswerSelected && option === currentQuestion.correctAnswer
+      "
+      [class.incorrect]="
+        isAnswerSelected &&
+        selectedAnswer === option &&
+        option !== currentQuestion.correctAnswer
+      "
+    >
       {{ option }}
     </button>
     }
@@ -23,6 +38,7 @@
 
   <div class="score">
     <p>Score: {{ score }}</p>
+    <p>Question: {{ currentQuestionIndex + 1 }} / {{ questions.length }}</p>
   </div>
   } }
 </div>
