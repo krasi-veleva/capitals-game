@@ -18,7 +18,8 @@
   </div>
 
   <div class="buttons-container">
-    @for (option of currentQuestion.options; track option) {
+    @for (option of currentQuestion.options; track option +
+    currentQuestion.country) {
     <button
       (click)="handleAnswer(option)"
       [disabled]="isAnswerSelected"
