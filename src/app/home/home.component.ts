@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { User } from 'firebase/auth';
 import { CommonModule } from '@angular/common';
 
@@ -12,11 +12,32 @@ import { CommonModule } from '@angular/common';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
-  user$: Observable<User | null>;
+export class HomeComponent implements OnInit, OnDestroy {
+  isLoading = true;
+  user: User | null = null;
+  private authSubscription?: Subscription;
 
-  constructor(private router: Router, private authService: AuthService) {
-    this.user$ = this.authService.user$;
+  constructor(private router: Router, private authService: AuthService) {}
+
+  ngOnInit() {
+    this.authSubscription = this.authService.user$.subscribe((user) => {
+      this.user = user;
+      this.isLoading = false;
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
+  }
+
+  handlePlayClick() {
+    if (this.user) {
+      this.goToCapitals();
+    } else {
+      this.goToLogin();
+    }
   }
 
   goToCapitals() {
@@ -42,15 +63,5 @@ export class HomeComponent {
     } catch (error) {
       console.error('Error during logout:', error);
     }
-  }
-
-  handlePlayClick() {
-    this.user$.subscribe((user) => {
-      if (user) {
-        this.goToCapitals();
-      } else {
-        this.goToLogin();
-      }
-    });
   }
 }

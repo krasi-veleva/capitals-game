@@ -53,3 +53,11 @@ button:disabled:hover {
   box-shadow: none;
   color: #7a7a7a;
 }
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  font-size: 1.2rem;
+}

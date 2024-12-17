@@ -3,17 +3,18 @@
     <h1>Dearest Adventurous Player, Welcome to Guess The Capital!</h1>
   </header>
 
+  @if (isLoading) {
+  <div class="loading">Loading...</div>
+  } @else {
   <div class="play-button">
-    <button (click)="handlePlayClick()" [disabled]="!(user$ | async)">
-      Play
-    </button>
+    <button (click)="handlePlayClick()" [disabled]="!user">Play</button>
   </div>
 
   <div class="statistic-button">
     <button (click)="goToStatistic()">Statistic</button>
   </div>
 
-  @if (!(user$ | async)) {
+  @if (!user) {
   <div>
     <div class="login-button">
       <button (click)="goToLogin()">Login</button>
@@ -28,5 +29,5 @@
       <button (click)="logout()">Logout</button>
     </div>
   </div>
-  }
+  } }
 </section>
