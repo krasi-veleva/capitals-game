@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-
-type UserStatistic = {
-  username: string;
-  points: number;
-  id: string;
-};
+import { FirestoreService } from '../services/firestore.service';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-statistic',
@@ -15,28 +11,23 @@ type UserStatistic = {
   styleUrl: './statistic.component.css',
 })
 export class StatisticComponent implements OnInit {
-  users = [
-    { username: 'Sofia', points: 10, id: '1' },
-    { username: 'Alex', points: 20, id: '2' },
-    { username: 'John', points: 15, id: '3' },
-    { username: 'Maria', points: 25, id: '4' },
-    { username: 'Anna', points: 30, id: '5' },
-    { username: 'Peter', points: 18, id: '6' },
-    { username: 'Sofia', points: 10, id: '7' },
-    { username: 'Alex', points: 20, id: '8' },
-    { username: 'John', points: 15, id: '9' },
-    { username: 'Maria', points: 25, id: '10' },
-    { username: 'Anna', points: 30, id: '11' },
-    { username: 'Peter', points: 18, id: '12' },
-  ];
-
+  users: User[] = [];
   rowsPerPage = 5;
   currentPage = 1;
-  paginatedUsers: UserStatistic[] = [];
+  paginatedUsers: User[] = [];
   totalPages: number = 1;
 
-  ngOnInit(): void {
+  constructor(private firestoreService: FirestoreService) {}
+
+  async ngOnInit(): Promise<void> {
+    await this.listAllUsers();
     this.calculatePagination();
+  }
+
+  async listAllUsers() {
+    this.users = await this.firestoreService.getAllUsers();
+
+    console.log(this.users);
   }
 
   calculatePagination() {

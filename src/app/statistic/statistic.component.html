@@ -21,8 +21,8 @@
     @for (user of paginatedUsers; track $index) {
     <tr>
       <td>{{ user.username }}</td>
-      <td>{{ user.points }}</td>
-      <td><a [routerLink]="['details', user.id]">Details</a></td>
+      <td>{{ user.bestScore }}</td>
+      <td><a [routerLink]="['details', user.uid]">Details</a></td>
     </tr>
     }
   </tbody>
