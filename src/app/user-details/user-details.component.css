@@ -84,15 +84,20 @@ header h1 {
   justify-content: center;
   margin-top: 15px;
 }
-.back-btn {
-  margin-top: 20px;
-  background-color: #f0f0f0;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  font-size: 1.2rem;
+  color: #666;
 }
-.back-btn:hover {
-  background-color: #e0e0e0;
+.likes button {
+  min-width: 100px;
+}
+
+.likes button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
 }

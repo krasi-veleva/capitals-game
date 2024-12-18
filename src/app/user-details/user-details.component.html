@@ -1,24 +1,37 @@
-<div class="profile-container" *ngIf="user">
+<div class="profile-container" *ngIf="!loading; else loadingTemplate">
   <header>
-    <h1>{{ user.username }}'s Profile</h1>
+    <h1>{{ user?.username }}'s Profile</h1>
   </header>
+
   <div class="user-img">
-    <img [src]="user.profileImageUrl || defaultImage" [alt]="user.username" />
+    <img
+      alt="user-profile-img"
+      [src]="user?.profileImageUrl || defaultImage"
+      [alt]="user?.username"
+    />
   </div>
+
   <div class="description">
-    <p>{{ user.description || "No description available" }}</p>
+    <p>{{ user?.description || "No description available" }}</p>
   </div>
+
   <div class="total-points">
-    <p>Best Score: {{ user.bestScore }}</p>
+    <p>Best Score: {{ user?.bestScore }}</p>
   </div>
 
   <div class="actions">
     <div class="likes">
-      <button (click)="toggleLike()" [class.liked]="hasLiked">
-        {{ hasLiked ? "Unlike" : "Like" }} ({{ likeCount }})
+      <button
+        (click)="toggleLike()"
+        [class.liked]="hasLiked"
+        [disabled]="likesLoading || isCurrentUser"
+      >
+        <span *ngIf="!likesLoading; else loadingLikes">
+          {{ hasLiked ? "Unlike" : "Like" }} ({{ likeCount }})
+        </span>
       </button>
     </div>
-    <!-- Only show edit/delete for profile owner -->
+
     <div class="edit-delete-group" *ngIf="isCurrentUser">
       <div class="edit-btn">
         <button (click)="goToEdit()">Edit</button>
@@ -29,3 +42,11 @@
     </div>
   </div>
 </div>
+
+<ng-template #loadingTemplate>
+  <div class="loading-container">Loading profile...</div>
+</ng-template>
+
+<ng-template #loadingLikes>
+  <span>Loading...</span>
+</ng-template>

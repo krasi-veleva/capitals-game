@@ -8,6 +8,8 @@ import {
   updateDoc,
   getDocs,
   deleteDoc,
+  where,
+  query,
 } from '@angular/fire/firestore';
 import { User } from '../models/user.model';
 import { Auth, deleteUser } from '@angular/fire/auth';
@@ -46,6 +48,32 @@ export class FirestoreService {
     const usersRef = collection(this.firestore, 'users');
     const usersSnap = await getDocs(usersRef);
     return usersSnap.docs.map((doc) => doc.data() as User);
+  }
+
+  async likeProfile(currentUserId: string, profileId: string) {
+    const likeId = `${currentUserId}_${profileId}`;
+    const likeRef = doc(this.firestore, 'likes', likeId);
+    await setDoc(likeRef, { currentUserId, profileId });
+  }
+  async unlikeProfile(currentUserId: string, profileId: string) {
+    const likeId = `${currentUserId}_${profileId}`;
+    await deleteDoc(doc(this.firestore, 'likes', likeId));
+  }
+  async hasUserLikedProfile(
+    currentUserId: string,
+    profileId: string
+  ): Promise<boolean> {
+    const likeDoc = await getDoc(
+      doc(this.firestore, 'likes', `${currentUserId}_${profileId}`)
+    );
+    return likeDoc.exists();
+  }
+  async getProfileLikesCount(profileId: string): Promise<number> {
+    const q = query(
+      collection(this.firestore, 'likes'),
+      where('profileId', '==', profileId)
+    );
+    return (await getDocs(q)).size;
   }
 
   async deleteProfile(authId: string) {

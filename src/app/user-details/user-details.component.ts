@@ -21,6 +21,8 @@ export class UserDetailsComponent implements OnInit {
   likeCount = 0;
   isCurrentUser = false;
   loading = true;
+  likesLoading = true;
+  currentUserId: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,31 +35,76 @@ export class UserDetailsComponent implements OnInit {
     const userId = this.route.snapshot.params['id'];
 
     try {
-      this.user = await this.firestoreService.getUser(userId);
+      const [user, currentUser] = await Promise.all([
+        this.firestoreService.getUser(userId),
+        firstValueFrom(this.authService.user$),
+      ]);
 
-      const currentUser = await firstValueFrom(this.authService.user$);
+      this.user = user;
+      this.currentUserId = currentUser?.uid || null;
       this.isCurrentUser = !!currentUser && currentUser.uid === userId;
-      console.log('Current user status:', {
-        isCurrentUser: this.isCurrentUser,
-        profileId: userId,
-        currentUserId: currentUser?.uid,
-      });
+      this.loading = false;
 
-      this.hasLiked = false;
-      this.likeCount = 0;
+      if (this.user) {
+        this.loadLikesData(userId);
+      }
     } catch (error) {
       console.error('Error loading user details:', error);
-    } finally {
       this.loading = false;
+    }
+  }
+
+  private async loadLikesData(userId: string) {
+    try {
+      const [hasLiked, likeCount] = await Promise.all([
+        this.currentUserId
+          ? this.firestoreService.hasUserLikedProfile(
+              this.currentUserId,
+              userId
+            )
+          : Promise.resolve(false),
+        this.firestoreService.getProfileLikesCount(userId),
+      ]);
+      this.hasLiked = hasLiked;
+      this.likeCount = likeCount;
+    } catch (error) {
+      console.error('Error loading likes data:', error);
+    } finally {
+      this.likesLoading = false;
+    }
+  }
+
+  async toggleLike() {
+    if (!this.currentUserId || !this.user?.uid) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    try {
+      if (this.hasLiked) {
+        await this.firestoreService.unlikeProfile(
+          this.currentUserId,
+          this.user.uid
+        );
+        this.likeCount--;
+      } else {
+        await this.firestoreService.likeProfile(
+          this.currentUserId,
+          this.user.uid
+        );
+        this.likeCount++;
+      }
+      this.hasLiked = !this.hasLiked;
+    } catch (error) {
+      console.error('Error toggling like:', error);
     }
   }
 
   goToEdit() {
     if (this.user?.uid) {
-      console.log('Navigating to edit profile:', this.user.uid);
       this.router.navigate(['/edit-user', this.user.uid]);
     }
   }
+
   async deleteProfile() {
     if (!this.isCurrentUser || !this.user) return;
     if (
@@ -72,9 +119,5 @@ export class UserDetailsComponent implements OnInit {
         console.error('Error deleting profile:', error);
       }
     }
-  }
-  toggleLike() {
-    this.hasLiked = !this.hasLiked;
-    this.likeCount += this.hasLiked ? 1 : -1;
   }
 }
