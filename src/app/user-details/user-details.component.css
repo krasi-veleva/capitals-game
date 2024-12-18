@@ -59,6 +59,7 @@ header h1 {
   background-color: #7abad9;
   border: 2px solid #6396b0;
   color: black;
+  width: 90px;
   padding: 8px 20px;
   border-radius: 5px;
   cursor: pointer;
