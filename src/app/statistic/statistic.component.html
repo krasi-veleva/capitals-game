@@ -20,7 +20,10 @@
   <tbody>
     @for (user of paginatedUsers; track $index) {
     <tr>
-      <td>{{ user.username }}</td>
+      <td>
+        <span *ngIf="isCurrentUser(user.uid)"><b>(You) </b></span
+        >{{ user.username }}
+      </td>
       <td>{{ user.bestScore }}</td>
       <td><a [routerLink]="['details', user.uid]">Details</a></td>
     </tr>
