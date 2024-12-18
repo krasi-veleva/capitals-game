@@ -1,16 +1,50 @@
-<form>
-  <h1>Edit your profile</h1>
-  <div class="form-group">
-    <label for="profile-image"> Profile Image </label>
-    <input id="profile-image" type="profile-image" name="profile-image" />
-  </div>
-  <div class="form-group">
-    <label for="username"> Username </label>
-    <input id="username" type="username" name="username" />
-  </div>
-  <div class="form-group">
-    <label for="description"> Description </label>
-    <textarea id="description"></textarea>
-  </div>
-  <button type="submit" class="btn-submit">Submit</button>
-</form>
+<div class="edit-profile-container" *ngIf="!loading; else loadingTemplate">
+  <form (ngSubmit)="handleSubmit()" #editForm="ngForm">
+    <h1>Edit your profile</h1>
+    <div class="current-image" *ngIf="formData.profileImageUrl">
+      <img [src]="formData.profileImageUrl" alt="Profile preview" />
+    </div>
+
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+        id="username"
+        type="text"
+        [value]="user?.username"
+        disabled
+        class="disabled-input"
+      />
+    </div>
+    <div class="form-group">
+      <label for="profile-image">Profile Image URL</label>
+      <input
+        id="profile-image"
+        type="url"
+        name="profileImageUrl"
+        [(ngModel)]="formData.profileImageUrl"
+        placeholder="Enter image URL"
+      />
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        id="description"
+        name="description"
+        [(ngModel)]="formData.description"
+        placeholder="Tell us about yourself"
+      ></textarea>
+    </div>
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    <div class="button-group">
+      <button type="submit" class="btn-submit">Save Changes</button>
+      <button type="button" class="btn-cancel" (click)="cancelEdit()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
+<ng-template #loadingTemplate>
+  <div class="loading-container">Loading profile data...</div>
+</ng-template>
