@@ -13,12 +13,17 @@ import {
 } from '@angular/fire/firestore';
 import { User } from '../models/user.model';
 import { Auth, deleteUser } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirestoreService {
-  constructor(private firestore: Firestore, private auth: Auth) {}
+  constructor(
+    private firestore: Firestore,
+    private auth: Auth,
+    private router: Router
+  ) {}
 
   async createUser(uid: string, userData: Partial<User>) {
     const userRef = doc(this.firestore, 'users', uid);
@@ -79,14 +84,20 @@ export class FirestoreService {
   async deleteProfile(authId: string) {
     const user = this.auth.currentUser;
     try {
-      const docRef = doc(this.firestore, 'users', authId);
-      await deleteDoc(docRef);
       console.log('user', user, user?.uid, authId);
+
       if (user && user.uid === authId) {
         console.log('Deleting user...');
         await deleteUser(user);
       }
+
+      const docRef = doc(this.firestore, 'users', authId);
+      await deleteDoc(docRef);
     } catch (error) {
+      this.auth.signOut();
+      this.router.navigate(['/']);
+
+      // error caused by firebase wanting to reauth , sigining out as temp fix
       console.error('Error deleting profile: ', error);
       throw error;
     }
