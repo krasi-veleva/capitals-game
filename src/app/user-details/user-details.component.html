@@ -1,29 +1,30 @@
-<div class="profile-container">
+<div class="profile-container" *ngIf="user">
   <header>
-    <h1>Sofia's profile</h1>
+    <h1>{{ user.username }}'s Profile</h1>
   </header>
   <div class="user-img">
-    <img alt="photo" [src]="imageURL.image" />
+    <img [src]="user.profileImageUrl || defaultImage" [alt]="user.username" />
   </div>
   <div class="description">
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, odio!
-    </p>
+    <p>{{ user.description || "No description available" }}</p>
   </div>
   <div class="total-points">
-    <p>Total Points: 20</p>
+    <p>Best Score: {{ user.bestScore }}</p>
   </div>
 
   <div class="actions">
     <div class="likes">
-      <button>Likes: 2</button>
+      <button (click)="toggleLike()" [class.liked]="hasLiked">
+        {{ hasLiked ? "Unlike" : "Like" }} ({{ likeCount }})
+      </button>
     </div>
-    <div class="edit-delete-group">
+    <!-- Only show edit/delete for profile owner -->
+    <div class="edit-delete-group" *ngIf="isCurrentUser">
       <div class="edit-btn">
         <button (click)="goToEdit()">Edit</button>
       </div>
       <div class="delete-btn">
-        <button>Delete</button>
+        <button (click)="deleteProfile()">Delete</button>
       </div>
     </div>
   </div>
