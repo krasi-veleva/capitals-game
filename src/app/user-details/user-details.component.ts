@@ -33,10 +33,8 @@ export class UserDetailsComponent implements OnInit {
     const userId = this.route.snapshot.params['id'];
 
     try {
-      // Get user data
       this.user = await this.firestoreService.getUser(userId);
 
-      // Check if viewing user is the profile owner using firstValueFrom
       const currentUser = await firstValueFrom(this.authService.user$);
       this.isCurrentUser = !!currentUser && currentUser.uid === userId;
       console.log('Current user status:', {
@@ -44,7 +42,7 @@ export class UserDetailsComponent implements OnInit {
         profileId: userId,
         currentUserId: currentUser?.uid,
       });
-      // TODO: Implement like functionality
+
       this.hasLiked = false;
       this.likeCount = 0;
     } catch (error) {
@@ -68,8 +66,7 @@ export class UserDetailsComponent implements OnInit {
       )
     ) {
       try {
-        // TODO: Implement delete functionality
-        await this.authService.signOut();
+        await this.firestoreService.deleteProfile(this.user.uid);
         this.router.navigate(['/']);
       } catch (error) {
         console.error('Error deleting profile:', error);
